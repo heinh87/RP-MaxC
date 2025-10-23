@@ -176,4 +176,4 @@ You can paste these rows into your paper or generate combined tables by post-pro
 
 ## License
 
-If you intend to publish or share, consider adding a LICENSE file. For academic work, include citation instructions here.
+<!--If you intend to publish or share, consider adding a LICENSE file. For academic work, include citation instructions here.-->
