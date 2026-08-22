@@ -10,6 +10,7 @@ The pipeline loads real network topologies from GML (or DIMACS), computes connec
 ## Contents
 
 - `RP-MaxC.py` — main script with classes and optimization routines
+- `maxc/` — additional parallel solver for the **minimum number of MaxC servers** only (SciPy + Gurobi); see below
 - `archive/` — input graphs in `.gml` (required)
 - Outputs (when you run the script):
   - `tableMaxC.tex` — RP-MaxC summary table
@@ -17,6 +18,26 @@ The pipeline loads real network topologies from GML (or DIMACS), computes connec
   - `tableRatioMaxCpmedian.tex` — ratios of RP-MaxC vs p-median across p..p+6
   - `log.txt` — global log
   - `<graph>_<|V|>_resul.txt` — per-network log
+
+## Additional code: `maxc/`
+
+`maxc/` is a separate package that computes **only** the RP-MaxC minimum number of servers, with:
+
+- parallel κ₂ / admissible-set computation (`cpu_count()-1` workers by default)
+- **SciPy** max-flow for local vertex-connectivity (default)
+- **Gurobi** for the min-servers ILP
+
+It does **not** replace `RP-MaxC.py` (no distances, p-median, or extra MaxC variants). Details, flags, and the algorithm are in [`maxc/README.md`](maxc/README.md).
+
+From the repository root:
+
+```bash
+python3 -m pip install networkx scipy gurobipy
+export GRB_LICENSE_FILE=/path/to/your/gurobi.lic   # required; no license is in this repo
+python3 -m maxc --files archive/YourGraph.gml
+```
+
+`--kappa-only` skips Gurobi and computes κ₂/Adm only.
 
 ## Requirements
 
